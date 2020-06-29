@@ -10,6 +10,7 @@ public class GridPopupPresenter
         this.model = model;
         this.view = view;
 
+        view.OnReloadClicked += UpdateModel;
         SetView();
     }
 
@@ -17,5 +18,11 @@ public class GridPopupPresenter
     {
         view.SetTitle(model.TitleType, model.Title);
         view.SetGrid(model.ColumnHeaderType, model.GetColumnHeaders(), model.GetRowsData());
+    }
+
+    protected void UpdateModel()
+    {
+        model.LoadJsonFile();
+        SetView();
     }
 }

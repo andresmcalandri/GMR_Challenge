@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,21 +8,36 @@ public class GridPopupView : MonoBehaviour
     protected GridItemFactory factory;
 
     [SerializeField]
+    Transform gridContainer = null;
+    [SerializeField]
     ScrollRect scrollViewPrefab = null;
     [SerializeField]
     GameObject gridRowPrefab = null;
+    [SerializeField]
+    Button reloadButton = null;
 
     GameObject titleObj;
     ScrollRect scrollRect;
 
+    public Action OnReloadClicked;
+
     void Awake()
     {
         InitializeFactory();
+        reloadButton.onClick.AddListener(OnReloadButtonClicked);
     }
 
     protected virtual void InitializeFactory()
     {
         factory = new GridItemFactory();
+    }
+
+    protected void OnReloadButtonClicked()
+    {
+        if (OnReloadClicked != null)
+        {
+            OnReloadClicked.Invoke();
+        }
     }
 
     public void SetTitle(string titleType, string title)
@@ -31,7 +47,7 @@ public class GridPopupView : MonoBehaviour
             titleObj = factory.Get(titleType, title);
             if (titleObj != null)
             {
-                titleObj.transform.SetParent(this.transform, false);
+                titleObj.transform.SetParent(gridContainer, false);
                 titleObj.transform.SetAsFirstSibling();
             }
         }
@@ -43,18 +59,16 @@ public class GridPopupView : MonoBehaviour
 
     public void SetGrid(string headerType, List<string> columnHeaderValues, List<Dictionary<string, string>> rowsData)
     {
-        if (scrollRect == null)
+        //Not ideal but since the data set is small, this should be an issue. If we were to be handling a big data set, i would instead have 
+        //created a logic robust enough to detect which were the changes and delete and update what was needed instead. Destroying and re creating
+        //the whole list could be a direct hit to performance if handling bigger data sets.
+        if (scrollRect != null)
         {
-            scrollRect = Instantiate(scrollViewPrefab, this.transform);
+            Destroy(scrollRect.gameObject);
         }
-        else
-        {
-            while (scrollRect.content.childCount > 0)
-            {
-                Destroy(scrollRect.content.GetChild(0));
-            }
-        }
-        
+
+        scrollRect = Instantiate(scrollViewPrefab, gridContainer);
+
         GameObject gridRow = Instantiate(gridRowPrefab, scrollRect.content);
         foreach (var headerValue in columnHeaderValues)
         {
@@ -86,5 +100,10 @@ public class GridPopupView : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        reloadButton.onClick.RemoveListener(OnReloadButtonClicked);
     }
 }

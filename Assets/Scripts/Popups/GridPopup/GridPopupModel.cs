@@ -18,9 +18,15 @@ public class GridPopupModel
     Dictionary<string, object> json;
     public GridPopupModel()
     {
+        LoadJsonFile();
+    }
+
+    public void LoadJsonFile()
+    {
         string jsonString = JsonParserUtility.GetStringFromJsonFile(FilePath);
         json = JsonParserUtility.GetDictionaryFromJson<string, object>(jsonString);
     }
+        
 
     public string Title
     {
