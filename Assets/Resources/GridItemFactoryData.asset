@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95a8a02a6c43b584aadeb3050f2f879d, type: 3}
+  m_Name: GridItemFactoryData
+  m_EditorClassIdentifier: 
+  templates:
+  - id: ID
+    prefab: {fileID: 3016539886051494127, guid: fcfb61a16409b944ebbbb96fe4e46bd7,
+      type: 3}
+  - id: Name
+    prefab: {fileID: 3016539886051494127, guid: fcfb61a16409b944ebbbb96fe4e46bd7,
+      type: 3}
+  - id: Nickname
+    prefab: {fileID: 3016539886051494127, guid: fcfb61a16409b944ebbbb96fe4e46bd7,
+      type: 3}
+  - id: Role
+    prefab: {fileID: 3016539886051494127, guid: fcfb61a16409b944ebbbb96fe4e46bd7,
+      type: 3}
+  - id: Title
+    prefab: {fileID: 3016539886051494127, guid: 7bc0f41073658ee4d964981518ccee42,
+      type: 3}
+  - id: ColumnHeaders
+    prefab: {fileID: 3016539886051494127, guid: 7bc0f41073658ee4d964981518ccee42,
+      type: 3}
